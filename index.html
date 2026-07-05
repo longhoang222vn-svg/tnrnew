@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tính TNR 25%</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial;
+}
+
+body{
+    background:#f2f2f7;
+    padding:20px;
+}
+
+.card{
+    max-width:420px;
+    margin:auto;
+    background:white;
+    border-radius:20px;
+    padding:20px;
+    box-shadow:0 5px 20px rgba(0,0,0,.15);
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+input{
+    width:100%;
+    padding:18px;
+    font-size:32px;
+    border-radius:15px;
+    border:1px solid #ddd;
+    text-align:right;
+}
+
+.item{
+    margin-top:20px;
+    font-size:26px;
+}
+
+.green{
+    color:#0a9b27;
+    font-weight:bold;
+}
+
+.buttons{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:20px;
+}
+
+button{
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#007AFF;
+    color:white;
+    font-size:18px;
+}
+
+.gray{
+    background:#999;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>💰 Tính TNR</h1>
+
+<input
+id="money"
+type="text"
+placeholder="Nhập số tiền">
+
+<div class="item">
+Số tiền:
+<span class="green" id="gross">0 đ</span>
+</div>
+
+<div class="item">
+Thuế (25%):
+<span class="green" id="tax">0 đ</span>
+</div>
+
+<div class="item">
+Thu nhập ròng:
+<span class="green" id="net">0 đ</span>
+</div>
+
+<div class="buttons">
+
+<button onclick="quick(50000)">50K</button>
+
+<button onclick="quick(100000)">100K</button>
+
+<button onclick="quick(200000)">200K</button>
+
+<button onclick="quick(500000)">500K</button>
+
+<button onclick="quick(1000000)">1TR</button>
+
+<button class="gray" onclick="clearAll()">Xóa</button>
+
+</div>
+
+<script>
+
+const money=document.getElementById("money");
+
+function format(v){
+return v.toLocaleString("vi-VN")+" đ";
+}
+
+function calc(){
+
+let raw=money.value.replace(/\./g,"").replace(/,/g,"");
+
+let value=parseInt(raw)||0;
+
+money.value=value?value.toLocaleString("vi-VN"):"";
+
+document.getElementById("gross").innerHTML=format(value);
+
+document.getElementById("tax").innerHTML=format(value*0.25);
+
+document.getElementById("net").innerHTML=format(value*0.75);
+
+}
+
+money.addEventListener("input",calc);
+
+function quick(v){
+
+money.value=v;
+
+calc();
+
+}
+
+function clearAll(){
+
+money.value="";
+
+calc();
+
+}
+
+</script>
+
+</body>
+</html>
